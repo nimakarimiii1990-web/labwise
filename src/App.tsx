@@ -8,6 +8,7 @@ import { QualityControlDesk } from './components/QualityControlDesk';
 import { ReagentTechnicalPortal } from './components/ReagentTechnicalPortal';
 import { ScientificKnowledgeHub } from './components/ScientificKnowledgeHub';
 import { GeminiLabAssistant } from './components/GeminiLabAssistant';
+import { Inventory } from './components/Inventory';
 import { NavigationTabs } from './components/NavigationTabs';
 import { DeviceConnectModal } from './components/DeviceConnectModal';
 import { DeviceParametersPortal } from './components/DeviceParametersPortal';
@@ -151,6 +152,8 @@ export default function App() {
         {activeTab === 'articles' && <ScientificKnowledgeHub />}
 
         {activeTab === 'ai_chat' && <GeminiLabAssistant />}
+
+        {activeTab === 'inventory' && <Inventory />}
       </main>
 
 
