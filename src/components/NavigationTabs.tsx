@@ -1,15 +1,16 @@
-import React, { useEffect, useRef } from "react";
+﻿import React, { useEffect, useRef } from "react";
 import "./NavigationTabs.css";
 
 const tabs = [
   { id: "workbench", label: "میز کار" },
   { id: "directory", label: "فهرست آزمایش‌ها" },
-  { id: "kit_ranges", label: "رنج کیڮی" },
-  { id: "qc", label: "کنتره کیفی" },
+  { id: "kit_ranges", label: "رنج کیت‌ها" },
+  { id: "qc", label: "کنترل کیفی" },
   { id: "reagents", label: "معرف‌ها" },
   { id: "devices", label: "دستگاه‌ها" },
   { id: "articles", label: "مقالات" },
-  { id: "ai_chat", label: "هوش مهنوٹخ" },
+  { id: "ai_chat", label: "هوش مصنوعی" },
+  { id: "inventory", label: "انبار" },
 ];
 
 interface NavigationTabsProps {
@@ -23,7 +24,7 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ activeTab, onTab
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      const currentIndex = tabs.findIndex(t) => t.id === activeTab);
+      const currentIndex = tabs.findIndex((t) => t.id === activeTab);
       let newIndex = currentIndex;
 
       if (e.key === "ArrowRight") {
