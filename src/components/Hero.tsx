@@ -12,7 +12,7 @@ export const Hero: React.FC<HeroProps> = ({ lang, onExploreCapabilities, onExplo
   const [imgError, setImgError] = useState(false);
 
   return (
-    <section className="relative pt-12 pb-16 lg:pt-16 lg:pb-24 border-b border-neutral-900 overflow-hidden">
+    <section className="relative pt-12 pb-16 lg:pt-16 lg:pb-24 border-b border-neutral-900 overflow-hidden" style={{ backgroundImage: "linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url(/images.jpg)", backgroundSize: "cover", backgroundPosition: "center" }}>
       {/* Subtle background glow effect */}
       <div className="absolute top-1/4 start-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-indigo-600/10 blur-[130px] -z-10 pointer-events-none rounded-full" />
 
