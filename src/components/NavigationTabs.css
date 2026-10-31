@@ -1,4 +1,4 @@
-﻿.tabs-wrapper {
+.tabs-wrapper {
   display: flex;
   gap: 10px;
   overflow-x: auto;
@@ -6,21 +6,28 @@
   background: #ffffff;
   border-bottom: 2px solid #e0e0e0;
   scrollbar-width: thin;
-  scrollbar-color: #888 #f1f1f1;
+  scrollbar-color: #1565c0 #e3f2fd;
   direction: rtl;
+  -webkit-overflow-scrolling: touch;
 }
 
 .tabs-wrapper::-webkit-scrollbar {
-  height: 8px;
+  height: 10px;
 }
 
 .tabs-wrapper::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #e3f2fd;
+  border-radius: 5px;
 }
 
 .tabs-wrapper::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 4px;
+  background: #1565c0;
+  border-radius: 5px;
+  border: 2px solid #e3f2fd;
+}
+
+.tabs-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #0d47a1;
 }
 
 .tab-button {
@@ -35,11 +42,13 @@
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.2s ease;
+  user-select: none;
 }
 
 .tab-button:hover {
   background: #bbdefb;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(21, 101, 192, 0.2);
 }
 
 .tab-button.active {
