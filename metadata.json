@@ -1,0 +1,8 @@
+{
+  "name": "LabWise - سامانه هوشمند آزمایشگاه بالینی و کنترل کیفی",
+  "description": "سامانه تخصصی اعتبارسنجی متقاطع تست‌ها، سنجش درصد خطای آزمایشگاه، کنترل کیفی محلول‌ها و مقالات علمی روز با هوش مصنوعی Gemini و پایگاه داده Firestore",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

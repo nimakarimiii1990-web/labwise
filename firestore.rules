@@ -1,0 +1,79 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default Deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == "nimakarimiii1990@gmail.com" ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isValidEvaluation(data) {
+      return data.patientId is string && data.patientId.size() <= 100
+        && data.department is string && data.department.size() <= 100
+        && data.operatorUid == request.auth.uid;
+    }
+
+    function isValidQcLog(data) {
+      return data.reagentName is string && data.reagentName.size() <= 150
+        && data.testCode is string && data.testCode.size() <= 50
+        && data.operatorUid == request.auth.uid;
+    }
+
+    function isValidCustomKitRange(data) {
+      return data.testId is string && data.testId.size() <= 100
+        && data.kitBrand is string && data.kitBrand.size() <= 150
+        && data.unit is string && data.unit.size() <= 50
+        && data.maleMin is number
+        && data.maleMax is number
+        && data.femaleMin is number
+        && data.femaleMax is number;
+    }
+
+    match /evaluations/{evaluationId} {
+      allow get: if isSignedIn() && resource.data.operatorUid == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.operatorUid == request.auth.uid;
+      allow create: if isSignedIn() && isValidId(evaluationId) && isValidEvaluation(incoming());
+      allow update: if isSignedIn() && isValidId(evaluationId) && existing().operatorUid == request.auth.uid && isValidEvaluation(incoming());
+      allow delete: if isSignedIn() && isValidId(evaluationId) && existing().operatorUid == request.auth.uid;
+    }
+
+    match /qc_logs/{logId} {
+      allow get: if isSignedIn() && resource.data.operatorUid == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.operatorUid == request.auth.uid;
+      allow create: if isSignedIn() && isValidId(logId) && isValidQcLog(incoming());
+      allow update: if isSignedIn() && isValidId(logId) && existing().operatorUid == request.auth.uid && isValidQcLog(incoming());
+      allow delete: if isSignedIn() && isValidId(logId) && existing().operatorUid == request.auth.uid;
+    }
+
+    match /custom_kit_ranges/{rangeId} {
+      allow get: if true;
+      allow list: if true;
+      allow create: if isAdmin() && isValidId(rangeId) && isValidCustomKitRange(incoming());
+      allow update: if isAdmin() && isValidId(rangeId) && isValidCustomKitRange(incoming());
+      allow delete: if isAdmin() && isValidId(rangeId);
+    }
+  }
+}
+

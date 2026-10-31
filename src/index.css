@@ -1,0 +1,135 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Vazirmatn', 'Tahoma', 'Segoe UI', system-ui, sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.015em;
+    line-height: 1.7;
+    background-color: #f0f7ff;
+    background-image:
+      /* soft gradient overlay */
+      linear-gradient(160deg, #f0f9ff 0%, #eef6ff 35%, #f8fafc 70%, #f0fdfa 100%),
+      /* laboratory pattern (SVG) */
+      url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd' opacity='0.07'%3E%3C!-- Flask --%3E%3Cpath d='M38 22h8v18l12 28H26l12-28V22z' stroke='%230891b2' stroke-width='1.5'/%3E%3Cpath d='M34 22h16' stroke='%230891b2' stroke-width='1.5'/%3E%3C!-- Test tube --%3E%3Crect x='78' y='18' width='10' height='42' rx='5' stroke='%2306b6d4' stroke-width='1.5'/%3E%3Cpath d='M78 28h10' stroke='%2306b6d4' stroke-width='1'/%3E%3C!-- Molecule --%3E%3Ccircle cx='28' cy='88' r='5' stroke='%2322d3ee' stroke-width='1.2'/%3E%3Ccircle cx='48' cy='98' r='4' stroke='%2322d3ee' stroke-width='1.2'/%3E%3Ccircle cx='42' cy='78' r='3.5' stroke='%2322d3ee' stroke-width='1.2'/%3E%3Cpath d='M28 88l14-10M28 88l20 10M42 78l6 20' stroke='%2322d3ee' stroke-width='1'/%3E%3C!-- DNA helix simplified --%3E%3Cpath d='M85 75c8 6 8 14 0 20s-8 14 0 20' stroke='%230891b2' stroke-width='1.2' fill='none'/%3E%3Cpath d='M95 75c-8 6-8 14 0 20s8 14 0 20' stroke='%2306b6d4' stroke-width='1.2' fill='none'/%3E%3C!-- Pipette drops --%3E%3Ccircle cx='100' cy='30' r='2.5' fill='%2306b6d4'/%3E%3Ccircle cx='108' cy='42' r='2' fill='%2322d3ee'/%3E%3C/g%3E%3C/svg%3E");
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+
+  [dir="ltr"] {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+/* Decorative floating lab shapes (extra layer) */
+.lab-bg-decor {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.lab-bg-decor::before,
+.lab-bg-decor::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.35;
+}
+
+.lab-bg-decor::before {
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, #a5f3fc 0%, transparent 70%);
+  top: -80px;
+  right: -60px;
+}
+
+.lab-bg-decor::after {
+  width: 380px;
+  height: 380px;
+  background: radial-gradient(circle, #bbf7d0 0%, transparent 70%);
+  bottom: 10%;
+  left: -80px;
+}
+
+/* Soft card elevation for light theme */
+.lab-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(14, 165, 233, 0.12);
+  box-shadow: 0 4px 24px -4px rgba(14, 116, 144, 0.08);
+}
+
+/* Print Optimization for PDF and Laboratory Reports */
+@media print {
+  @page {
+    margin: 1.2cm;
+    size: A4 portrait;
+  }
+
+  header,
+  footer,
+  nav,
+  button,
+  .no-print,
+  .lab-bg-decor {
+    display: none !important;
+  }
+
+  body {
+    background-color: #ffffff !important;
+    background-image: none !important;
+    color: #0f172a !important;
+    font-size: 11pt !important;
+  }
+
+  .bg-slate-950,
+  .bg-slate-900,
+  .bg-slate-900\/80,
+  .bg-slate-900\/50,
+  .bg-slate-800,
+  .bg-white,
+  .bg-sky-50 {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    border-color: #cbd5e1 !important;
+  }
+
+  .text-white,
+  .text-slate-100,
+  .text-slate-200,
+  .text-slate-300 {
+    color: #0f172a !important;
+  }
+
+  .text-slate-400,
+  .text-slate-500 {
+    color: #475569 !important;
+  }
+
+  .border-slate-800,
+  .border-slate-700 {
+    border-color: #e2e8f0 !important;
+  }
+
+  input,
+  select,
+  textarea {
+    border-bottom: 1px solid #94a3b8 !important;
+    color: #0f172a !important;
+    background: transparent !important;
+  }
+
+  .shadow-xl,
+  .shadow-2xl,
+  .shadow-lg {
+    box-shadow: none !important;
+  }
+}

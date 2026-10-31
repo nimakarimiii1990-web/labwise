@@ -1,0 +1,191 @@
+{
+  "entities": {
+    "LabEvaluation": {
+      "title": "LabEvaluation",
+      "description": "Clinical laboratory cross-validation and error risk evaluation record",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique evaluation ID"
+        },
+        "patientId": {
+          "type": "string",
+          "description": "Patient identifier or sample accession number",
+          "maxLength": 100
+        },
+        "patientAge": {
+          "type": "number",
+          "description": "Patient age in years"
+        },
+        "patientGender": {
+          "type": "string",
+          "description": "Patient gender: male or female",
+          "enum": ["male", "female", "other"]
+        },
+        "department": {
+          "type": "string",
+          "description": "Laboratory department tested",
+          "maxLength": 100
+        },
+        "errorRiskPercent": {
+          "type": "number",
+          "description": "Estimated discordance/error risk percentage"
+        },
+        "operatorDecision": {
+          "type": "string",
+          "description": "Operator action status e.g. approved, repeat_sample, check_qc, redraw",
+          "maxLength": 100
+        },
+        "operatorUid": {
+          "type": "string",
+          "description": "Operator Firebase Auth UID",
+          "maxLength": 128
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp ISO or server timestamp"
+        }
+      },
+      "required": ["patientId", "department", "operatorUid"]
+    },
+    "QualityControlLog": {
+      "title": "QualityControlLog",
+      "description": "Levey-Jennings and Westgard QC log for reagents and analyzers",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Log record ID"
+        },
+        "reagentName": {
+          "type": "string",
+          "description": "Reagent kit commercial name",
+          "maxLength": 150
+        },
+        "testCode": {
+          "type": "string",
+          "description": "Test mnemonic code e.g. CKMB, ALT, GLU",
+          "maxLength": 50
+        },
+        "lotNumber": {
+          "type": "string",
+          "description": "Reagent batch/lot number",
+          "maxLength": 100
+        },
+        "targetMean": {
+          "type": "number",
+          "description": "Target control mean"
+        },
+        "targetSD": {
+          "type": "number",
+          "description": "Standard deviation"
+        },
+        "measuredValue": {
+          "type": "number",
+          "description": "Measured QC result"
+        },
+        "ruleViolation": {
+          "type": "string",
+          "description": "Violated Westgard rule if any",
+          "maxLength": 50
+        },
+        "operatorUid": {
+          "type": "string",
+          "description": "UID of the operator who ran QC",
+          "maxLength": 128
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "QC timestamp"
+        }
+      },
+      "required": ["reagentName", "testCode", "measuredValue", "operatorUid"]
+    },
+    "CustomKitRange": {
+      "title": "CustomKitRange",
+      "description": "Admin-configured normal reference range and panic intervals for clinical test kits",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique range ID or test ID"
+        },
+        "testId": {
+          "type": "string",
+          "description": "Test ID corresponding to test catalog",
+          "maxLength": 100
+        },
+        "kitBrand": {
+          "type": "string",
+          "description": "Reagent kit brand name e.g. Pars Azmun, BioSystems",
+          "maxLength": 150
+        },
+        "unit": {
+          "type": "string",
+          "description": "Test measurement unit",
+          "maxLength": 50
+        },
+        "maleMin": {
+          "type": "number",
+          "description": "Adult male normal lower limit"
+        },
+        "maleMax": {
+          "type": "number",
+          "description": "Adult male normal upper limit"
+        },
+        "femaleMin": {
+          "type": "number",
+          "description": "Adult female normal lower limit"
+        },
+        "femaleMax": {
+          "type": "number",
+          "description": "Adult female normal upper limit"
+        },
+        "panicLow": {
+          "type": "number",
+          "description": "Critical panic low value"
+        },
+        "panicHigh": {
+          "type": "number",
+          "description": "Critical panic high value"
+        },
+        "notes": {
+          "type": "string",
+          "description": "Calibration or analyzer notes",
+          "maxLength": 500
+        },
+        "updatedBy": {
+          "type": "string",
+          "description": "Admin email or UID who updated this kit",
+          "maxLength": 128
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "ISO timestamp of last range calibration"
+        }
+      },
+      "required": ["testId", "kitBrand", "unit", "maleMin", "maleMax", "femaleMin", "femaleMax"]
+    }
+  },
+  "firestore": {
+    "/evaluations/{evaluationId}": {
+      "schema": {
+        "$ref": "#/entities/LabEvaluation"
+      },
+      "description": "Collection of patient lab result discordance evaluations"
+    },
+    "/qc_logs/{logId}": {
+      "schema": {
+        "$ref": "#/entities/QualityControlLog"
+      },
+      "description": "Collection of quality control and Westgard test logs"
+    },
+    "/custom_kit_ranges/{rangeId}": {
+      "schema": {
+        "$ref": "#/entities/CustomKitRange"
+      },
+      "description": "Collection of master kit normal ranges editable exclusively by system admin"
+    }
+  }
+}
