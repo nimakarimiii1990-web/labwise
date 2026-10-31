@@ -8,6 +8,7 @@ import { QualityControlDesk } from './components/QualityControlDesk';
 import { ReagentTechnicalPortal } from './components/ReagentTechnicalPortal';
 import { ScientificKnowledgeHub } from './components/ScientificKnowledgeHub';
 import { GeminiLabAssistant } from './components/GeminiLabAssistant';
+import { NavigationTabs } from './components/NavigationTabs';
 import { DeviceConnectModal } from './components/DeviceConnectModal';
 import { DeviceParametersPortal } from './components/DeviceParametersPortal';
 import {
@@ -105,6 +106,9 @@ export default function App() {
         isFirestoreOnline={isFirestoreOnline}
         onOpenDeviceModal={() => setIsDeviceModalOpen(true)}
       />
+
+      {/* Scrollable Navigation Tabs */}
+      <NavigationTabs activeTab={activeTab} onTabChange={setActiveTab} />
 
       {/* Device & Export Modal */}
       <DeviceConnectModal
